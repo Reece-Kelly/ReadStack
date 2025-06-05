@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.Alignment
 
 import androidx.compose.material3.*
@@ -39,10 +40,21 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        Title(
-                            title = "ReadStack",
-                            modifier = Modifier.align(Alignment.TopCenter)
-                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(bottom = 72.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Title(title = "ReadStack")
+
+                            BookButton(
+                                title = "Example Book",
+                                currentPageNumber = 300,
+                                totalPageNumber = 560,
+                                onClick = {}
+                            )
+                        }
 
                         BottomNavBar(
                             modifier = Modifier.align(Alignment.BottomCenter)
@@ -63,6 +75,14 @@ fun Title(title: String, modifier: Modifier = Modifier) {
         modifier = modifier.padding(16.dp)
     )
 }
+
+@Composable
+fun BookButton(title: String, currentPageNumber: Int, totalPageNumber: Int, onClick: () -> Unit) {
+    Button(onClick = { onClick() }) {
+        Text("$title page number $currentPageNumber/$totalPageNumber")
+    }
+}
+
 
 @Composable
 fun BottomNavBar(modifier: Modifier = Modifier) {
