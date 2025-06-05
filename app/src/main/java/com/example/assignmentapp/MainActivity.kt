@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Alignment
 
 import androidx.compose.material3.*
@@ -27,22 +28,21 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Person
 
 
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AssignmentAppTheme {
-                    MainScreen()
-                }
+                HomeScreen()
             }
         }
     }
+}
 
 
 @Composable
-fun MainScreen() {
+fun HomeScreen() {
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Box(
             modifier = Modifier
@@ -58,9 +58,16 @@ fun MainScreen() {
                 Title(title = "ReadStack")
 
                 BookButton(
-                    title = "Example Book",
+                    title = "1984",
+                    currentPageNumber = 250,
+                    totalPageNumber = 356,
+                    onClick = {}
+                )
+
+                BookButton(
+                    title = "Dune",
                     currentPageNumber = 300,
-                    totalPageNumber = 560,
+                    totalPageNumber = 412,
                     onClick = {}
                 )
             }
@@ -74,9 +81,9 @@ fun MainScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun MainScreenPreview() {
+fun HomeScreenPreview() {
     AssignmentAppTheme {
-        MainScreen()
+        HomeScreen()
     }
 }
 
@@ -93,8 +100,13 @@ fun Title(title: String, modifier: Modifier = Modifier) {
 
 @Composable
 fun BookButton(title: String, currentPageNumber: Int, totalPageNumber: Int, onClick: () -> Unit) {
-    Button(onClick = { onClick() }) {
-        Text("$title page number $currentPageNumber/$totalPageNumber")
+    Button(
+        onClick = { onClick() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        Text("$title\nUp to page $currentPageNumber of $totalPageNumber")
     }
 }
 
