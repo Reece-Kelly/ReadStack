@@ -133,12 +133,3 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
         }
     }
 }
-
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    AssignmentAppTheme {
-//        Greeting("Hello")
-//    }
-//}
