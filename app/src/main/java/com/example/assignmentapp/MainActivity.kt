@@ -72,6 +72,15 @@ fun MainScreen() {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun MainScreenPreview() {
+    AssignmentAppTheme {
+        MainScreen()
+    }
+}
+
+
 @Composable
 fun Title(title: String, modifier: Modifier = Modifier) {
     Text(
