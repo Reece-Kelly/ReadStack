@@ -34,34 +34,40 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AssignmentAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(bottom = 72.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Title(title = "ReadStack")
-
-                            BookButton(
-                                title = "Example Book",
-                                currentPageNumber = 300,
-                                totalPageNumber = 560,
-                                onClick = {}
-                            )
-                        }
-
-                        BottomNavBar(
-                            modifier = Modifier.align(Alignment.BottomCenter)
-                        )
-                    }
+                    MainScreen()
                 }
             }
+        }
+    }
+
+
+@Composable
+fun MainScreen() {
+    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 72.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Title(title = "ReadStack")
+
+                BookButton(
+                    title = "Example Book",
+                    currentPageNumber = 300,
+                    totalPageNumber = 560,
+                    onClick = {}
+                )
+            }
+
+            BottomNavBar(
+                modifier = Modifier.align(Alignment.BottomCenter)
+            )
         }
     }
 }
