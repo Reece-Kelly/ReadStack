@@ -1,5 +1,6 @@
 package com.example.assignmentapp
 
+import android.R.style
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,10 +20,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Alignment
-
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Person
@@ -43,7 +46,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun HomeScreen() {
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(onClick = { }) {
+                Icon(Icons.Filled.Add, contentDescription = "Add")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        bottomBar = {
+            BottomNavBar()
+        }
+    ) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -78,13 +92,10 @@ fun HomeScreen() {
                     onClick = {}
                 )
             }
-
-            BottomNavBar(
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -99,23 +110,33 @@ fun HomeScreenPreview() {
 fun Title(title: String, modifier: Modifier = Modifier) {
     Text(
         text = title,
-        fontSize = 32.sp,
+        fontSize = 45.sp,
         fontWeight = FontWeight.Bold,
         modifier = modifier.padding(16.dp)
     )
 }
 
 @Composable
-fun BookButton(title: String, currentPageNumber: Int, totalPageNumber: Int, author: String, onClick: () -> Unit) {
+fun BookButton(
+    title: String,
+    currentPageNumber: Int,
+    totalPageNumber: Int,
+    author: String,
+    onClick: () -> Unit
+) {
     Button(
         onClick = { onClick() },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        Text("$title | $author\nUp to page $currentPageNumber of $totalPageNumber")
+        Text(
+            "$title | $author\nUp to page $currentPageNumber of $totalPageNumber",
+            style = TextStyle(fontSize = 20.sp)
+        )
     }
 }
+
 
 @Composable
 fun RecommendationButton(title: String, onClick: () -> Unit) {
@@ -125,7 +146,10 @@ fun RecommendationButton(title: String, onClick: () -> Unit) {
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        Text(title)
+        Text(
+            title,
+            style = TextStyle(fontSize = 20.sp)
+        )
     }
 }
 
