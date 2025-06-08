@@ -72,6 +72,11 @@ fun HomeScreen() {
                     totalPageNumber = 412,
                     onClick = {}
                 )
+
+                RecommendationButton(
+                    title = "Get a book recommendation!",
+                    onClick = {}
+                )
             }
 
             BottomNavBar(
@@ -109,6 +114,18 @@ fun BookButton(title: String, currentPageNumber: Int, totalPageNumber: Int, auth
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Text("$title | $author\nUp to page $currentPageNumber of $totalPageNumber")
+    }
+}
+
+@Composable
+fun RecommendationButton(title: String, onClick: () -> Unit) {
+    Button(
+        onClick = { onClick() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        Text(title)
     }
 }
 
