@@ -251,6 +251,73 @@ fun BookInformationScreen() {
     }
 }
 
+@Composable
+fun RecommendationScreen() {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(onClick = { }) {
+                Icon(Icons.Filled.Add, contentDescription = "Add")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        bottomBar = {
+            BottomNavBar()
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 72.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Title(title = "ReadStack")
+
+                Text(
+                    text = "Book recommendations based on what you have read:",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
+                )
+
+                BookButton(
+                    title = "Dune Messiah",
+                    author = "Frank Herbert",
+                    currentPageNumber = 0,
+                    totalPageNumber = 412,
+                    onClick = {}
+                )
+
+                BookButton(
+                    title = "Homage to Catalonia",
+                    author = "George Orwell",
+                    currentPageNumber = 0,
+                    totalPageNumber = 275,
+                    onClick = {}
+                )
+
+                BookButton(
+                    title = "First Things First",
+                    author = "Stephen R. Covey",
+                    currentPageNumber = 0,
+                    totalPageNumber = 275,
+                    onClick = {}
+                )
+
+            }
+        }
+    }
+}
+
+
+
 
 @Preview(showBackground = true)
 @Composable
@@ -273,6 +340,14 @@ fun BookScreenPreview() {
 fun BookInformationPreview() {
     AssignmentAppTheme {
         BookInformationScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RecommendationPreview() {
+    AssignmentAppTheme {
+        RecommendationScreen()
     }
 }
 
@@ -303,7 +378,7 @@ fun BookButton(
     ) {
         Text(
             "$title | $author\nUp to page $currentPageNumber of $totalPageNumber",
-            style = TextStyle(fontSize = 20.sp)
+            style = TextStyle(fontSize = 23.sp)
         )
     }
 }
