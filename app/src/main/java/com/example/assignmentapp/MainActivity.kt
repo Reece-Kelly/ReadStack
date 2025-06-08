@@ -25,9 +25,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Person
 
 
@@ -70,6 +72,15 @@ fun HomeScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Title(title = "ReadStack")
+
+                Text(
+                    text = "Currently Reading:",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
+                )
 
                 BookButton(
                     title = "1984",
@@ -156,7 +167,7 @@ fun RecommendationButton(title: String, onClick: () -> Unit) {
 
 @Composable
 fun BottomNavBar(modifier: Modifier = Modifier) {
-    val items = listOf("Home", "Search", "Profile")
+    val items = listOf("Home", "Books", "Profile")
     var selectedItem by remember { mutableStateOf(0) }
 
     NavigationBar(modifier = modifier) {
@@ -165,7 +176,7 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
                 icon = {
                     when (item) {
                         "Home" -> Icon(Icons.Default.Home, contentDescription = item)
-                        "Search" -> Icon(Icons.Default.Search, contentDescription = item)
+                        "Books" -> Icon(Icons.AutoMirrored.Filled.MenuBook, contentDescription = item)
                         "Profile" -> Icon(Icons.Default.Person, contentDescription = item)
                     }
                 },
