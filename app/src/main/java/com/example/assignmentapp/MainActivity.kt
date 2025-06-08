@@ -524,7 +524,7 @@ fun BookInfo(
 
 @Composable
 fun BottomNavBar(modifier: Modifier = Modifier) {
-    val items = listOf("Home", "Books", "Suggest", "Profile")
+    val items = listOf("Home", "Books", "Suggest")
     var selectedItem by remember { mutableIntStateOf(0) }
 
     NavigationBar(modifier = modifier) {
@@ -539,7 +539,6 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
                         )
 
                         "Suggest" -> Icon(Icons.Default.Lightbulb, contentDescription = item)
-                        "Profile" -> Icon(Icons.Default.Person, contentDescription = item)
                     }
                 },
                 label = { Text(item) },
