@@ -17,7 +17,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.ui.Alignment
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -204,6 +206,50 @@ fun BookScreen() {
     }
 }
 
+@Composable
+fun BookInformationScreen() {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(onClick = { }) {
+                Icon(Icons.Filled.Add, contentDescription = "Add")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        bottomBar = {
+            BottomNavBar()
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 72.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Title(title = "ReadStack")
+
+                BookInfo(
+                    title = "1984",
+                    author = "George Orwell",
+                    yearPublished = 1949,
+                    rating = 4,
+                    review = "1984 by George Orwell is a haunting and prophetic novel that explores the terrifying consequences of totalitarianism and surveillance. Its bleak portrayal of a dystopian future where truth is manipulated and individuality is crushed remains chillingly relevant. Orwell's masterful storytelling and incisive political commentary make it an essential and unsettling read.",
+                    currentPage = 250,
+                    totalPages = 356,
+                    onPageUpdate = {}
+                    )
+
+
+            }
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
@@ -218,6 +264,14 @@ fun HomeScreenPreview() {
 fun BookScreenPreview() {
     AssignmentAppTheme {
         BookScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BookInformationPreview() {
+    AssignmentAppTheme {
+        BookInformationScreen()
     }
 }
 
@@ -269,6 +323,58 @@ fun RecommendationButton(title: String, onClick: () -> Unit) {
     }
 }
 
+@Composable
+fun BookInfo(
+    title: String,
+    author: String,
+    yearPublished: Int,
+    rating: Int,
+    review: String,
+    currentPage: Int,
+    totalPages: Int,
+    onPageUpdate: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = "Book Information",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text("Title: $title", fontSize = 18.sp)
+            Text("Author: $author", fontSize = 18.sp)
+            Text("Rating: $rating/5 Stars", fontSize = 18.sp)
+            Text("Year Published: $yearPublished", fontSize = 18.sp)
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text("Review:", fontSize = 18.sp, fontWeight = FontWeight.Medium)
+            Text(review, fontSize = 16.sp)
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = onPageUpdate,
+                modifier = Modifier.align(Alignment.End)
+            ) {
+                Text("Page $currentPage / $totalPages")
+            }
+        }
+    }
+}
+
+
 
 @Composable
 fun BottomNavBar(modifier: Modifier = Modifier) {
@@ -281,7 +387,11 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
                 icon = {
                     when (item) {
                         "Home" -> Icon(Icons.Default.Home, contentDescription = item)
-                        "Books" -> Icon(Icons.AutoMirrored.Filled.MenuBook, contentDescription = item)
+                        "Books" -> Icon(
+                            Icons.AutoMirrored.Filled.MenuBook,
+                            contentDescription = item
+                        )
+
                         "Profile" -> Icon(Icons.Default.Person, contentDescription = item)
                     }
                 },
