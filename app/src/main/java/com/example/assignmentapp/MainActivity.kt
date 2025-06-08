@@ -316,6 +316,69 @@ fun RecommendationScreen() {
     }
 }
 
+@Composable
+fun SearchScreen() {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(onClick = { }) {
+                Icon(Icons.Filled.Add, contentDescription = "Add")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        bottomBar = {
+            BottomNavBar()
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 72.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Title(title = "ReadStack")
+
+                Text(
+                    text = "Search - Stephen King|",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
+                )
+
+                BookButton(
+                    title = "The Stand",
+                    author = "Stephen King",
+                    currentPageNumber = 0,
+                    totalPageNumber = 1275,
+                    onClick = {}
+                )
+
+                BookButton(
+                    title = "It",
+                    author = "Stephen King",
+                    currentPageNumber = 0,
+                    totalPageNumber = 1168,
+                    onClick = {}
+                )
+
+                BookButton(
+                    title = "The Shining",
+                    author = "Stephen King",
+                    currentPageNumber = 0,
+                    totalPageNumber = 447,
+                    onClick = {}
+                )
+            }
+        }
+    }
+}
 
 
 
@@ -348,6 +411,14 @@ fun BookInformationPreview() {
 fun RecommendationPreview() {
     AssignmentAppTheme {
         RecommendationScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchPreview() {
+    AssignmentAppTheme {
+        SearchScreen()
     }
 }
 
