@@ -1,6 +1,5 @@
 package com.example.assignmentapp
 
-import android.R.style
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,13 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Person
 
 
@@ -40,6 +36,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AssignmentAppTheme {
                 HomeScreen()
+                BookScreen()
             }
         }
     }
@@ -107,12 +104,96 @@ fun HomeScreen() {
     }
 }
 
+@Composable
+fun BookScreen() {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(onClick = { }) {
+                Icon(Icons.Filled.Add, contentDescription = "Add")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        bottomBar = {
+            BottomNavBar()
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 72.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Title(title = "ReadStack")
+
+                Text(
+                    text = "Currently Reading:",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
+                )
+
+                BookButton(
+                    title = "1984",
+                    author = "George Orwell",
+                    currentPageNumber = 250,
+                    totalPageNumber = 356,
+                    onClick = {}
+                )
+
+                BookButton(
+                    title = "Dune",
+                    author = "Frank Herbert",
+                    currentPageNumber = 300,
+                    totalPageNumber = 412,
+                    onClick = {}
+                )
+
+                Text(
+                    text = "To Read:",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
+                )
+
+                Text(
+                    text = "Read:",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
+                )
+
+
+            }
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
     AssignmentAppTheme {
         HomeScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BookScreenPreview() {
+    AssignmentAppTheme {
+        BookScreen()
     }
 }
 
@@ -168,7 +249,7 @@ fun RecommendationButton(title: String, onClick: () -> Unit) {
 @Composable
 fun BottomNavBar(modifier: Modifier = Modifier) {
     val items = listOf("Home", "Books", "Profile")
-    var selectedItem by remember { mutableStateOf(0) }
+    var selectedItem by remember { mutableIntStateOf(0) }
 
     NavigationBar(modifier = modifier) {
         items.forEachIndexed { index, item ->
