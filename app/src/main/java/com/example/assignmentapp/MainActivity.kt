@@ -26,9 +26,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
 
 
 class MainActivity : ComponentActivity() {
@@ -51,7 +51,7 @@ fun HomeScreen() {
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = { }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add")
+                Icon(Icons.Filled.Search, contentDescription = "Search")
             }
         },
         floatingActionButtonPosition = FabPosition.End,
@@ -112,7 +112,7 @@ fun BookScreen() {
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = { }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add")
+                Icon(Icons.Filled.Search, contentDescription = "Search")
             }
         },
         floatingActionButtonPosition = FabPosition.End,
@@ -212,7 +212,7 @@ fun BookInformationScreen() {
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = { }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add")
+                Icon(Icons.Filled.Search, contentDescription = "Add")
             }
         },
         floatingActionButtonPosition = FabPosition.End,
@@ -256,7 +256,7 @@ fun RecommendationScreen() {
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = { }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add")
+                Icon(Icons.Filled.Search, contentDescription = "Search")
             }
         },
         floatingActionButtonPosition = FabPosition.End,
@@ -321,7 +321,7 @@ fun SearchScreen() {
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = { }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add")
+                Icon(Icons.Filled.Search, contentDescription = "Search")
             }
         },
         floatingActionButtonPosition = FabPosition.End,
