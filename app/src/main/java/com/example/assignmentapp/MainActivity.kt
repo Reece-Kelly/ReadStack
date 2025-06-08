@@ -157,12 +157,28 @@ fun BookScreen() {
                 )
 
                 Text(
-                    text = "To Read:",
+                    text = "Want To Read:",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
+                )
+
+                BookButton(
+                    title = "Animal Farm",
+                    author = "George Orwell",
+                    currentPageNumber = 0,
+                    totalPageNumber = 192,
+                    onClick = {}
+                )
+
+                BookButton(
+                    title = "Grit",
+                    author = "Angela Duckworth",
+                    currentPageNumber = 0,
+                    totalPageNumber = 412,
+                    onClick = {}
                 )
 
                 Text(
@@ -172,6 +188,14 @@ fun BookScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
+                )
+
+                BookButton(
+                    title = "The 7 Habits of Highly Effective People",
+                    author = "Stephen R. Covey",
+                    currentPageNumber = 412,
+                    totalPageNumber = 412,
+                    onClick = {}
                 )
 
 
