@@ -59,6 +59,7 @@ fun HomeScreen() {
 
                 BookButton(
                     title = "1984",
+                    author = "George Orwell",
                     currentPageNumber = 250,
                     totalPageNumber = 356,
                     onClick = {}
@@ -66,6 +67,7 @@ fun HomeScreen() {
 
                 BookButton(
                     title = "Dune",
+                    author = "Frank Herbert",
                     currentPageNumber = 300,
                     totalPageNumber = 412,
                     onClick = {}
@@ -99,14 +101,14 @@ fun Title(title: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BookButton(title: String, currentPageNumber: Int, totalPageNumber: Int, onClick: () -> Unit) {
+fun BookButton(title: String, currentPageNumber: Int, totalPageNumber: Int, author: String, onClick: () -> Unit) {
     Button(
         onClick = { onClick() },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        Text("$title\nUp to page $currentPageNumber of $totalPageNumber")
+        Text("$title | $author\nUp to page $currentPageNumber of $totalPageNumber")
     }
 }
 
