@@ -29,7 +29,6 @@ import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 
 
 class MainActivity : ComponentActivity() {
