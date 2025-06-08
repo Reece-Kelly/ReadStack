@@ -27,6 +27,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 
@@ -237,12 +238,12 @@ fun BookInformationScreen() {
                     title = "1984",
                     author = "George Orwell",
                     yearPublished = 1949,
-                    rating = 4,
+                    rating = 4.5,
                     review = "1984 by George Orwell is a haunting and prophetic novel that explores the terrifying consequences of totalitarianism and surveillance. Its bleak portrayal of a dystopian future where truth is manipulated and individuality is crushed remains chillingly relevant. Orwell's masterful storytelling and incisive political commentary make it an essential and unsettling read.",
                     currentPage = 250,
                     totalPages = 356,
                     onPageUpdate = {}
-                    )
+                )
 
 
             }
@@ -328,7 +329,7 @@ fun BookInfo(
     title: String,
     author: String,
     yearPublished: Int,
-    rating: Int,
+    rating: Double,
     review: String,
     currentPage: Int,
     totalPages: Int,
@@ -375,10 +376,9 @@ fun BookInfo(
 }
 
 
-
 @Composable
 fun BottomNavBar(modifier: Modifier = Modifier) {
-    val items = listOf("Home", "Books", "Profile")
+    val items = listOf("Home", "Books", "Suggest", "Profile")
     var selectedItem by remember { mutableIntStateOf(0) }
 
     NavigationBar(modifier = modifier) {
@@ -392,6 +392,7 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
                             contentDescription = item
                         )
 
+                        "Suggest" -> Icon(Icons.Default.Lightbulb, contentDescription = item)
                         "Profile" -> Icon(Icons.Default.Person, contentDescription = item)
                     }
                 },
