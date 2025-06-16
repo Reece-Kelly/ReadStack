@@ -1,6 +1,7 @@
 package com.example.assignmentapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -31,20 +32,58 @@ import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 
+// Tag for logging
+private const val TAG = "MainActivity"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate Called")
         setContent {
             AssignmentAppTheme {
-                HomeScreen()
-                BookScreen()
+                ReadStackApp()
             }
         }
     }
 }
 
+@Composable
+private fun ReadStackApp() {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(onClick = { }) {
+                Icon(Icons.Filled.Search, contentDescription = "Search")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        bottomBar = {
+            BottomNavBar()
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 72.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Title(title = "ReadStack")
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ReadStackAppPreview() {
+    ReadStackApp()
+}
 
 @Composable
 fun HomeScreen() {
