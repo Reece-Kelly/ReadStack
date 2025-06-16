@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -238,12 +239,20 @@ fun BookInformationScreen() {
                     author = "George Orwell",
                     yearPublished = 1949,
                     rating = 4.5,
+
                     review = "1984 by George Orwell is a haunting and prophetic novel that explores the terrifying consequences of totalitarianism and surveillance. Its bleak portrayal of a dystopian future where truth is manipulated and individuality is crushed remains chillingly relevant. Orwell's masterful storytelling and incisive political commentary make it an essential and unsettling read.",
                     currentPage = 250,
                     totalPages = 356,
                     onPageUpdate = {}
                 )
 
+                BookButton(
+                    title = "The 7 Habits of Highly Effective People",
+                    author = "Stephen R. Covey",
+                    currentPageNumber = 412,
+                    totalPageNumber = 412,
+                    onClick = {}
+                )
 
             }
         }
@@ -501,6 +510,18 @@ fun BookInfo(
             Text("Title: $title", fontSize = 18.sp)
             Text("Author: $author", fontSize = 18.sp)
             Text("Rating: $rating/5 Stars", fontSize = 18.sp)
+
+            TextButton(
+                onClick = {},
+                contentPadding = PaddingValues(0.dp)
+            ) {
+                Text(
+                    text = "Add another rating",
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 14.sp
+                )
+            }
+
             Text("Year Published: $yearPublished", fontSize = 18.sp)
 
             Spacer(modifier = Modifier.height(8.dp))
