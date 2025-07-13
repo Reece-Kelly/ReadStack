@@ -51,6 +51,15 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.material.icons.extended)
+
+    implementation(libs.koin.core)
+    // Koin for Android
+    implementation(libs.koin.android)
+    // Koin for Jetpack Compose (if you're using Koin to inject into Composables directly)
+    implementation(libs.koin.androidx.compose)
+    // Koin for AndroidX ViewModel (if you're injecting ViewModels)
+//    implementation(libs.koin.androidx.viewmodel)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
