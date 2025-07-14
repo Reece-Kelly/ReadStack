@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization") version "1.9.10" // or match your Kotlin version
 }
 
 android {
@@ -63,6 +64,12 @@ dependencies {
     implementation(libs.retrofit) // Check for the latest version
 
     implementation(libs.converter.gson) // For Gson
+
+    implementation(libs.kotlinx.serialization.json) // latest as of mid-2025
+
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+
+    implementation(libs.okhttp) // latest as of mid-2025
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
