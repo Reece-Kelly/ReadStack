@@ -60,6 +60,10 @@ dependencies {
     // Koin for AndroidX ViewModel (if you're injecting ViewModels)
 //    implementation(libs.koin.androidx.viewmodel)
 
+    implementation(libs.retrofit) // Check for the latest version
+
+    implementation(libs.converter.gson) // For Gson
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
