@@ -27,7 +27,7 @@ val appModules = module {
             .addConverterFactory(
                 json.asConverterFactory(contentType = "application/json".toMediaType())
             )
-            .baseUrl("https://www.googleapis.com/books/v1/volumes/")
+            .baseUrl("https://www.googleapis.com/books/v1/")
             .build()
     }
     single { get<Retrofit>().create(BooksAPI::class.java) }
