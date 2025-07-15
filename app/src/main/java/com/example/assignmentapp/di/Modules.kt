@@ -22,6 +22,7 @@ val appModules = module {
     single { Dispatchers.IO }
     single { ReadStackViewModel(get()) }
     single {
+        val json = Json { ignoreUnknownKeys = true }
         Retrofit.Builder()
             .addConverterFactory(
                 json.asConverterFactory(contentType = "application/json".toMediaType())
