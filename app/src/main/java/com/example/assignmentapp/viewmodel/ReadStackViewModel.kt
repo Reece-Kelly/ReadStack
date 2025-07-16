@@ -15,7 +15,7 @@ class ReadStackViewModel(
     val readStackUIState = MutableStateFlow(ReadStackUIState())
 
     init {
-        getBooks()
+        getBooks() // Fetch books when the ViewModel is initialized
     }
 
     private fun getBooks() {
@@ -24,7 +24,7 @@ class ReadStackViewModel(
             when (val result = booksRepository.getBooks()) {
                 is NetworkResult.Success -> {
                     readStackUIState.update {
-                        it.copy(isLoading = false, books = result.data)
+                        it.copy(isLoading = false, volumes = result.data)
                     }
                 }
                 is NetworkResult.Error -> {
