@@ -5,8 +5,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface BooksAPI {
-    @GET("books")
+    @GET("volumes")
     suspend fun fetchBooks(
-        @Query("tag") tag: String,
-    ): Response<List<Book>>
+        @Query("q") query: String,
+        @Query("maxResults") maxResults: Int = 10,
+    ): Response<GoogleBooksApiResponse>
 }
