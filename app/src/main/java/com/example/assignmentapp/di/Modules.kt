@@ -10,6 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import okhttp3.MediaType.Companion.toMediaType
+import org.koin.androidx.viewmodel.dsl.viewModel
+
 
 
 private val json = Json {
@@ -20,7 +22,8 @@ private val json = Json {
 val appModules = module {
     single<BooksRepository> { BooksRepositoryImpl(get(), get()) }
     single { Dispatchers.IO }
-    single { ReadStackViewModel(get()) }
+//    single { ReadStackViewModel(get()) }
+    viewModel { ReadStackViewModel(get()) }
     single {
         val json = Json { ignoreUnknownKeys = true }
         Retrofit.Builder()
