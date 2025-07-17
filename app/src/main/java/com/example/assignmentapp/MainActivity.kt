@@ -43,13 +43,13 @@ import com.example.assignmentapp.views.BookList
 import com.example.assignmentapp.di.appModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.compose.getViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
 
 
 class MainActivity : ComponentActivity() {
-    val bookViewModel: ReadStackViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -67,37 +67,34 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Composable
-    private fun ReadStackApp() {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            floatingActionButton = {
-                FloatingActionButton(onClick = { }) {
-                    Icon(Icons.Filled.Search, contentDescription = "Search")
-                }
-            },
-            floatingActionButtonPosition = FabPosition.End,
-            bottomBar = {
-                BottomNavBar()
+
+@Composable
+private fun ReadStackApp() {
+    val readStackViewModel: ReadStackViewModel = getViewModel()
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(onClick = { }) {
+                Icon(Icons.Filled.Search, contentDescription = "Search")
             }
-        ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 72.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Title(title = "ReadStack")
-                    BookList(modifier = Modifier)
-                }
-            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        bottomBar = {
+            BottomNavBar()
         }
+    ) { innerPadding ->
+        // Use BookList directly without wrapping it in a Column or Box
+        BookList(
+            viewModel = readStackViewModel,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(bottom = 72.dp) // Account for FAB space
+        )
     }
+}
+
 
     @Preview
     @Composable
