@@ -1,11 +1,28 @@
 package com.example.assignmentapp.data
 
-class BooksRepositoryImpl : BooksRepository {
-    override fun getBooks(): List<Book> {
-        return listOf(
-            Book("0001", "1984", "George Orwell", 1949, 250, 356, 4.5, "Great book!"),
-            Book("0002", "Dune", "Frank Herbert", 1964, 200, 512, 4.0, "Sandy book! I like the worms!"),
-            Book("0003", "Animal Farm", "George Orwell", 1945, 0, 192, 4.5, "Absolute power corrupts absolutely!"),
-        )
+import android.util.Log
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
+
+class BooksRepositoryImpl(
+    private val booksAPI: BooksAPI,
+    private val dispatcher: CoroutineDispatcher
+) : BooksRepository {
+
+    override suspend fun getBooks(): NetworkResult<GoogleBooksApiResponse> {
+        return withContext(dispatcher) {
+            try {
+                val response = booksAPI.fetchBooks("harry potter") // This is a placeholder string, will have to replace with a variable that the user controls (search bar)
+                if (response.isSuccessful) {
+                    Log.d("Network Response", response.body().toString())
+                    print(response.body())
+                    NetworkResult.Success(response.body()!!)
+                } else {
+                    NetworkResult.Error(response.errorBody().toString())
+                }
+            } catch (e: Exception) {
+                NetworkResult.Error(e.message ?: "Unknown error")
+            }
+        }
     }
 }

@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.serialization) // ✅ Use this only
 }
+
 
 android {
     namespace = "com.example.assignmentapp"
@@ -52,6 +54,10 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.material.icons.extended)
 
+    implementation(libs.coil.compose)
+
+    implementation(libs.bundles.networking)
+
     implementation(libs.koin.core)
     // Koin for Android
     implementation(libs.koin.android)
@@ -59,6 +65,21 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     // Koin for AndroidX ViewModel (if you're injecting ViewModels)
 //    implementation(libs.koin.androidx.viewmodel)
+
+    implementation(libs.retrofit) // Check for the latest version
+
+    implementation(libs.converter.gson) // For Gson
+
+    implementation(libs.kotlinx.serialization.json) // latest as of mid-2025
+
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+
+    implementation(libs.okhttp)
+    implementation(libs.androidx.compose) // latest as of mid-2025
+
+    implementation(libs.androidx.preference.ktx) // Replace 1.2.1 with the actual latest version
+    
+    implementation(libs.compose.lifecycle)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
