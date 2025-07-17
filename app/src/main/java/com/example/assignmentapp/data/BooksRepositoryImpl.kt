@@ -12,7 +12,7 @@ class BooksRepositoryImpl(
     override suspend fun getBooks(): NetworkResult<GoogleBooksApiResponse> {
         return withContext(dispatcher) {
             try {
-                val response = booksAPI.fetchBooks("harry potter")
+                val response = booksAPI.fetchBooks("harry potter") // This is a placeholder string, will have to replace with a variable that the user controls (search bar)
                 if (response.isSuccessful) {
                     Log.d("Network Response", response.body().toString())
                     print(response.body())
