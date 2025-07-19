@@ -1,13 +1,10 @@
 package com.example.assignmentapp
 
-import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -34,13 +31,10 @@ import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.assignmentapp.viewmodel.ReadStackViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.assignmentapp.views.BookList
 import com.example.assignmentapp.di.appModules
+import com.example.assignmentapp.navigation.AppNavigation
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.compose.getViewModel
@@ -61,7 +55,8 @@ class MainActivity : ComponentActivity() {
             Log.d("MainActivity", "onCreate Called")
             setContent {
                 AssignmentAppTheme {
-                    ReadStackApp()
+                    AppNavigation()
+//                    ReadStackApp() // May have to remove this
                 }
             }
         }
@@ -87,6 +82,7 @@ private fun ReadStackApp() {
         // Use BookList directly without wrapping it in a Column or Box
         BookList(
             viewModel = readStackViewModel,
+            onBookClicked = {}, // Temporary fix!!!!!
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -102,66 +98,66 @@ private fun ReadStackApp() {
         ReadStackApp()
     }
 
-    @Composable
-    fun HomeScreen() {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            floatingActionButton = {
-                FloatingActionButton(onClick = { }) {
-                    Icon(Icons.Filled.Search, contentDescription = "Search")
-                }
-            },
-            floatingActionButtonPosition = FabPosition.End,
-            bottomBar = {
-                BottomNavBar()
-            }
-        ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 72.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Title(title = "ReadStack")
-
-                    Text(
-                        text = "Currently Reading:",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
-                    )
-
-                    BookButton(
-                        title = "1984",
-                        author = "George Orwell",
-                        currentPageNumber = 250,
-                        totalPageNumber = 356,
-                        onClick = {}
-                    )
-
-                    BookButton(
-                        title = "Dune",
-                        author = "Frank Herbert",
-                        currentPageNumber = 300,
-                        totalPageNumber = 412,
-                        onClick = {}
-                    )
-
-                    RecommendationButton(
-                        title = "Get a book recommendation!",
-                        onClick = {}
-                    )
-                }
-            }
-        }
-    }
+//    @Composable
+//    fun HomeScreen(onBookClicked: () -> Unit) {
+//        Scaffold(
+//            modifier = Modifier.fillMaxSize(),
+//            floatingActionButton = {
+//                FloatingActionButton(onClick = { }) {
+//                    Icon(Icons.Filled.Search, contentDescription = "Search")
+//                }
+//            },
+//            floatingActionButtonPosition = FabPosition.End,
+//            bottomBar = {
+//                BottomNavBar()
+//            }
+//        ) { innerPadding ->
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .padding(innerPadding)
+//            ) {
+//                Column(
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .padding(bottom = 72.dp),
+//                    horizontalAlignment = Alignment.CenterHorizontally
+//                ) {
+//                    Title(title = "ReadStack")
+//
+//                    Text(
+//                        text = "Currently Reading:",
+//                        fontSize = 22.sp,
+//                        fontWeight = FontWeight.SemiBold,
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(start = 16.dp, top = 8.dp, bottom = 4.dp)
+//                    )
+//
+//                    BookButton(
+//                        title = "1984",
+//                        author = "George Orwell",
+//                        currentPageNumber = 250,
+//                        totalPageNumber = 356,
+//                        onClick = {}
+//                    )
+//
+//                    BookButton(
+//                        title = "Dune",
+//                        author = "Frank Herbert",
+//                        currentPageNumber = 300,
+//                        totalPageNumber = 412,
+//                        onClick = {}
+//                    )
+//
+//                    RecommendationButton(
+//                        title = "Get a book recommendation!",
+//                        onClick = {}
+//                    )
+//                }
+//            }
+//        }
+//    }
 
     @Composable
     fun BookScreen() {
@@ -445,13 +441,15 @@ private fun ReadStackApp() {
     }
 
 
-    @Preview(showBackground = true)
-    @Composable
-    fun HomeScreenPreview() {
-        AssignmentAppTheme {
-            HomeScreen()
-        }
-    }
+//    @Preview(showBackground = true)
+//    @Composable
+//    fun HomeScreenPreview() {
+//        AssignmentAppTheme {
+//            HomeScreen {
+//                navController.navigate(Screens.BookDetailsScreen.route)
+//            }
+//        }
+//    }
 
     @Preview(showBackground = true)
     @Composable
