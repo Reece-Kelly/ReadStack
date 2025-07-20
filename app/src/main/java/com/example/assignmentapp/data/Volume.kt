@@ -13,9 +13,10 @@ data class GoogleBooksApiResponse(
 @Serializable
 data class Volume(
     @SerialName("id")
-    val id: String,
+    val id: String = "",
+
     @SerialName("volumeInfo")
-    val volumeInfo: VolumeInfo
+    val volumeInfo: VolumeInfo = VolumeInfo()
 )
 
 @Serializable
@@ -23,15 +24,15 @@ data class VolumeInfo(
     @SerialName("title")
     val title: String = "",
     @SerialName("authors")
-    val authors: List<String>?,
-//    @SerialName("description")
-//    val description: String?,
+    val authors: List<String>? = emptyList(),
+    @SerialName("description")
+    val description: String = "",
     @SerialName("publisher")
-    val publisher: String?,
+    val publisher: String = "",
     @SerialName("publishedDate")
-    val publishedDate: String?,
+    val publishedDate: String = "",
     @SerialName("imageLinks")
-    val imageLinks: ImageLinks? = null
+    val imageLinks: ImageLinks? = ImageLinks()
 )
 
 @Serializable
