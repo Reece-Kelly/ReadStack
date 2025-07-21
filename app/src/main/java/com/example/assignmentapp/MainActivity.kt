@@ -35,6 +35,7 @@ import com.example.assignmentapp.viewmodel.ReadStackViewModel
 import com.example.assignmentapp.views.BookList
 import com.example.assignmentapp.di.appModules
 import com.example.assignmentapp.navigation.AppNavigation
+import com.example.assignmentapp.views.BottomNavBar
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.compose.getViewModel
@@ -590,34 +591,6 @@ private fun ReadStackApp() {
                 ) {
                     Text("Page $currentPage / $totalPages")
                 }
-            }
-        }
-    }
-
-
-    @Composable
-    fun BottomNavBar(modifier: Modifier = Modifier) {
-        val items = listOf("Home", "Books", "Suggest")
-        var selectedItem by remember { mutableIntStateOf(0) }
-
-        NavigationBar(modifier = modifier) {
-            items.forEachIndexed { index, item ->
-                NavigationBarItem(
-                    icon = {
-                        when (item) {
-                            "Home" -> Icon(Icons.Default.Home, contentDescription = item)
-                            "Books" -> Icon(
-                                Icons.AutoMirrored.Filled.MenuBook,
-                                contentDescription = item
-                            )
-
-                            "Suggest" -> Icon(Icons.Default.Lightbulb, contentDescription = item)
-                        }
-                    },
-                    label = { Text(item) },
-                    selected = selectedItem == index,
-                    onClick = { selectedItem = index }
-                )
             }
         }
     }
