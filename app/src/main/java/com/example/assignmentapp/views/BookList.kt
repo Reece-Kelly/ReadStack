@@ -47,9 +47,9 @@ fun BookList(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        item {
-            Title(title = "ReadStack")
-        }
+//        item {
+//            Title(title = "ReadStack")
+//        }
 
         if (readStackUIState.isLoading) {
             item {
