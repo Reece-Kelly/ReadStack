@@ -11,6 +11,8 @@ import androidx.navigation.navArgument
 import com.example.assignmentapp.views.HomeScreen
 import com.example.assignmentapp.views.BookDetailsScreen
 import com.example.assignmentapp.data.Volume
+import com.example.assignmentapp.views.SearchScreen
+import com.example.assignmentapp.views.SuggestScreen
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 
@@ -34,6 +36,26 @@ fun AppNavigation() {
                     } catch (e: Exception) {
                         Log.e("Navigation", "Failed to encode volume", e)
                     }
+                }
+            )
+        }
+
+        composable(Screens.SearchScreen.route) {
+            SearchScreen(
+                onBookClicked = { volume ->
+                    val json = Json.encodeToString(volume)
+                    val encoded = Uri.encode(json)
+                    navController.navigate("${Screens.BookDetailsScreen.route}/$encoded")
+                }
+            )
+        }
+
+        composable(Screens.SuggestScreen.route) {
+            SuggestScreen(
+                onBookClicked = { volume ->
+                    val json = Json.encodeToString(volume)
+                    val encoded = Uri.encode(json)
+                    navController.navigate("${Screens.BookDetailsScreen.route}/$encoded")
                 }
             )
         }
