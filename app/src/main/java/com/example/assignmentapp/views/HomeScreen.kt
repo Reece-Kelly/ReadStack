@@ -11,7 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.assignmentapp.BottomNavBar
+import com.example.assignmentapp.views.BottomNavBar
 import com.example.assignmentapp.data.Volume
 import com.example.assignmentapp.viewmodel.ReadStackViewModel
 import org.koin.androidx.compose.getViewModel
@@ -33,7 +33,9 @@ fun HomeScreen(onBookClicked: (Volume) -> Unit) {
         }
     ) { innerPadding ->
 
-        BookList(
+
+
+        BookList( // ToDo Get this code to pull from a database, rather than from the API
             viewModel = readStackViewModel,
             modifier = Modifier
                 .fillMaxSize()
