@@ -11,13 +11,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.assignmentapp.views.BottomNavBar
 import com.example.assignmentapp.data.Volume
 import com.example.assignmentapp.viewmodel.ReadStackViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun SearchScreen(onBookClicked: (Volume) -> Unit) {
+fun SearchScreen(
+    onBookClicked: (Volume) -> Unit,
+    navController: NavController
+) {
     val readStackViewModel: ReadStackViewModel = getViewModel()
 
     Scaffold(
@@ -29,10 +33,9 @@ fun SearchScreen(onBookClicked: (Volume) -> Unit) {
         },
         floatingActionButtonPosition = FabPosition.End,
         bottomBar = {
-            BottomNavBar()
+            BottomNavBar(navController = navController)
         }
     ) { innerPadding ->
-
 
 
         BookList(
