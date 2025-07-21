@@ -54,7 +54,7 @@ fun HomeScreen(
                 viewModel = readStackViewModel,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 72.dp), // leave room for bottom nav bar & FAB
+                    .padding(bottom = 72.dp),
                 onBookClicked = onBookClicked
             )
         }
