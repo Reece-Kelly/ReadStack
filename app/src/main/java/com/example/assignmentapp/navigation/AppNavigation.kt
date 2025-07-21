@@ -36,7 +36,8 @@ fun AppNavigation() {
                     } catch (e: Exception) {
                         Log.e("Navigation", "Failed to encode volume", e)
                     }
-                }
+                },
+                navController = navController
             )
         }
 
@@ -46,7 +47,8 @@ fun AppNavigation() {
                     val json = Json.encodeToString(volume)
                     val encoded = Uri.encode(json)
                     navController.navigate("${Screens.BookDetailsScreen.route}/$encoded")
-                }
+                },
+                navController = navController
             )
         }
 
@@ -56,7 +58,8 @@ fun AppNavigation() {
                     val json = Json.encodeToString(volume)
                     val encoded = Uri.encode(json)
                     navController.navigate("${Screens.BookDetailsScreen.route}/$encoded")
-                }
+                },
+                navController = navController
             )
         }
 
