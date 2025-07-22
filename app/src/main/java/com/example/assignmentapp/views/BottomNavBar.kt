@@ -3,6 +3,7 @@ package com.example.assignmentapp.views
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lightbulb
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -19,24 +20,26 @@ fun BottomNavBar(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-    val items = listOf("Home", "Suggest")
-    val routes = listOf(Screens.HomeScreen.route, Screens.SuggestScreen.route)
-    val icons = listOf(Icons.Default.Home, Icons.Default.Lightbulb)
+    val navItems = listOf(
+        Triple("Home", Screens.HomeScreen.route, Icons.Default.Home),
+        Triple("Suggest", Screens.SuggestScreen.route, Icons.Default.Lightbulb),
+        Triple("Search", Screens.SearchScreen.route, Icons.Default.Search)
+    )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    NavigationBar(modifier = modifier) {
-        items.forEachIndexed { index, item ->
+    NavigationBar(
+        modifier = modifier
+    ) {
+        navItems.forEach { (label, route, icon) ->
             NavigationBarItem(
-                icon = {
-                    Icon(icons[index], contentDescription = item)
-                },
-                label = { Text(item) },
-                selected = currentRoute == routes[index],
+                icon = { Icon(icon, contentDescription = label) },
+                label = { Text(label) },
+                selected = currentRoute == route,
                 onClick = {
-                    if (currentRoute != routes[index]) {
-                        navController.navigate(routes[index]) {
+                    if (currentRoute != route) {
+                        navController.navigate(route) {
                             popUpTo(navController.graph.startDestinationId) {
                                 saveState = true
                             }
@@ -49,3 +52,5 @@ fun BottomNavBar(
         }
     }
 }
+
+
