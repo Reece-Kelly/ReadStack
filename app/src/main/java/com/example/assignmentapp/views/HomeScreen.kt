@@ -30,14 +30,8 @@ fun HomeScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                navController.navigate(Screens.SearchScreen.route)
-            }) {
-                Icon(Icons.Filled.Search, contentDescription = "Search")
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End,
+//        floatingActionButton = {SearchFab(navController)},
+//        floatingActionButtonPosition = FabPosition.End,
         bottomBar = {
             BottomNavBar(navController = navController)
         }

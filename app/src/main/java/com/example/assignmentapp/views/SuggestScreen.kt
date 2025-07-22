@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import com.example.assignmentapp.Title
 import com.example.assignmentapp.views.BottomNavBar
 import com.example.assignmentapp.data.Volume
+import com.example.assignmentapp.navigation.Screens
 import com.example.assignmentapp.viewmodel.ReadStackViewModel
 import org.koin.androidx.compose.getViewModel
 
@@ -32,12 +33,8 @@ fun SuggestScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        floatingActionButton = {
-            FloatingActionButton(onClick = { }) {
-                Icon(Icons.Filled.Search, contentDescription = "Search")
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End,
+//        floatingActionButton = { SearchFab(navController) },
+//        floatingActionButtonPosition = FabPosition.End,
         bottomBar = {
             BottomNavBar(
                 modifier = Modifier,
