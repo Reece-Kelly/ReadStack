@@ -1,5 +1,6 @@
 package com.example.assignmentapp.views
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -24,12 +25,17 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.example.assignmentapp.Title
+import com.example.assignmentapp.data.Book
 import com.example.assignmentapp.data.Volume
 import com.example.assignmentapp.viewmodel.ReadStackViewModel
 
 
 @Composable
-fun BookList(viewModel: ReadStackViewModel, modifier: Modifier = Modifier) {
+fun BookList(
+    viewModel: ReadStackViewModel,
+    modifier: Modifier = Modifier,
+    onBookClicked: (Volume) -> Unit,
+) {
     val readStackUIState by viewModel.readStackUIState.collectAsStateWithLifecycle()
     val volumeItems = readStackUIState.volumes.items.orEmpty()
 
@@ -41,9 +47,9 @@ fun BookList(viewModel: ReadStackViewModel, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        item {
-            Title(title = "ReadStack")
-        }
+//        item {
+//            Title(title = "ReadStack")
+//        }
 
         if (readStackUIState.isLoading) {
             item {
@@ -53,7 +59,10 @@ fun BookList(viewModel: ReadStackViewModel, modifier: Modifier = Modifier) {
 
         if (volumeItems.isNotEmpty()) {
             items(volumeItems) { volume ->
-                VolumeListItem(volume = volume)
+                VolumeListItem(
+                    volume = volume,
+                    onBookClicked = onBookClicked
+                )
             }
         }
 
@@ -67,7 +76,10 @@ fun BookList(viewModel: ReadStackViewModel, modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun VolumeListItem(volume: Volume) {
+fun VolumeListItem(
+    volume: Volume,
+    onBookClicked: (Volume) -> Unit
+) {
     val volumeInfo = volume.volumeInfo
 
     ElevatedCard(
@@ -79,6 +91,9 @@ fun VolumeListItem(volume: Volume) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)
+                .clickable {
+                    onBookClicked(volume)
+                }
         ) {
 
             val thumbnailUrl = volumeInfo.imageLinks?.thumbnail?.replace("http://", "https://")

@@ -81,6 +81,9 @@ dependencies {
     
     implementation(libs.compose.lifecycle)
 
+    implementation(libs.compose.navigation)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
