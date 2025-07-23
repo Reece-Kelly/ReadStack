@@ -23,6 +23,7 @@ serializationJson = "1.5.1"
 coroutines = "1.7.3"
 okhttp3 = "4.11.0"
 composeVersion = "1.0.0-alpha04"
+room = "2.6.1"
 
 
 [libraries]
@@ -64,6 +65,10 @@ androidx-compose = { group = "androidx.xr.compose", name = "compose", version.re
 compose-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "composeVersion" }
 #noinspection SimilarGradleDependency
 compose-navigation = "androidx.navigation:navigation-compose:2.9.2"
+
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 
 [plugins]
