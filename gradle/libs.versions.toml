@@ -3,7 +3,10 @@ agp = "8.10.0"
 coilCompose = "2.5.0"
 converterGson = "2.9.0"
 koinVersion = "3.5.0"
+
 kotlin = "2.0.21"
+ksp = "2.0.21-1.0.26"
+
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -76,6 +79,9 @@ android-application = { id = "com.android.application", version = "8.10.1" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "2.0.21" }
+
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
 
 
 [bundles]
