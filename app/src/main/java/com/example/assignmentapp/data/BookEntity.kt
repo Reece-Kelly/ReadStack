@@ -14,8 +14,16 @@ data class BookEntity(
     val publishedDate: String,
     val thumbnail: String,
     val smallThumbnail: String,
-    val currentPageNumber: Int,
-    val totalPageNumber: Int,
-    val rating: Double,
-    val review: String,
+    val status: BookStatus?,
+    val currentPageNumber: Int?,
+    val totalPageNumber: Int?,
+    val rating: Double?,
+    val review: String?,
 )
+
+enum class BookStatus {
+    READING,
+    READ,
+    WANT_TO_READ
+}
+
