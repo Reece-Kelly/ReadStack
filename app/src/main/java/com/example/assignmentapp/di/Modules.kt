@@ -1,12 +1,12 @@
 package com.example.assignmentapp.di
 
 import androidx.room.Room
-import com.example.assignmentapp.data.Book
 import com.example.assignmentapp.data.BookDatabase
 import com.example.assignmentapp.data.BooksRepository
 import com.example.assignmentapp.data.BooksRepositoryImpl
 import com.example.assignmentapp.viewmodel.ReadStackViewModel
 import com.example.assignmentapp.data.BooksAPI
+import com.example.assignmentapp.data.MIGRATION_1_2
 import org.koin.dsl.module
 import kotlinx.serialization.json.Json
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +24,7 @@ private val json = Json {
 }
 
 val appModules = module {
-    single<BooksRepository> { BooksRepositoryImpl(get(), get()) }
+    single<BooksRepository> { BooksRepositoryImpl(get(), get(), get()) }
     single { Dispatchers.IO }
 //    single { ReadStackViewModel(get()) }
     viewModel { ReadStackViewModel(get()) }
@@ -46,7 +46,12 @@ val appModules = module {
             androidContext(),
             BookDatabase::class.java,
             "book_database"
-        ).build()
+        )
+            .addMigrations(MIGRATION_1_2)
+            .build()
     }
-    single { get<BookDatabase>().bookDao() }
+
+    single {
+        get<BookDatabase>().bookDao()
+    }
 }
