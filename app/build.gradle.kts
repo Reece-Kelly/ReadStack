@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.serialization)
-//    id("com.google.devtools.ksp") version "1.9.0-1.0.13" apply false
     alias(libs.plugins.ksp)
 }
 
@@ -45,24 +44,33 @@ android {
 }
 
 dependencies {
-    // Compose & Material
+    // Compose BOM (central versioning)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+
+    // Compose UI
+    implementation(libs.androidx.compose.ui.ui)
+    implementation(libs.androidx.compose.ui.text)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
     implementation(libs.material.icons.extended)
-    implementation(libs.compose.lifecycle)
+
+    // Material 3
+    implementation(libs.androidx.compose.material3.material32) // If this is a different version
+
+    // Navigation
     implementation(libs.compose.navigation)
+    implementation(libs.androidx.navigation.compose)
+
+    // Lifecycle & Activity
+    implementation(libs.compose.lifecycle)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
 
     // AndroidX Core
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.preference.ktx)
 
-    // Image loading
+    // Coil for image loading
     implementation(libs.coil.compose)
 
     // Networking
@@ -72,26 +80,24 @@ dependencies {
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.okhttp)
 
-    // DI (Koin)
+    // Dependency Injection (Koin)
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
 
-    // Compose
-    implementation(libs.androidx.compose)
-
-    // Annotation Processor
+    // Room Database
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
+
+    // Experimental XR Compose (optional)
+    implementation("androidx.xr.compose:compose:1.0.0-alpha04")
 
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
-
