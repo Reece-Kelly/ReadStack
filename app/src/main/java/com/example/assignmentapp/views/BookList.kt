@@ -24,8 +24,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.example.assignmentapp.Title
-import com.example.assignmentapp.data.Book
 import com.example.assignmentapp.data.Volume
 import com.example.assignmentapp.viewmodel.ReadStackViewModel
 
@@ -37,7 +35,7 @@ fun BookList(
     onBookClicked: (Volume) -> Unit,
 ) {
     val readStackUIState by viewModel.readStackUIState.collectAsStateWithLifecycle()
-    val volumeItems = readStackUIState.volumes.items.orEmpty()
+    val volumeItems = readStackUIState.volumes
 
     LazyColumn(
         modifier = modifier
@@ -46,10 +44,6 @@ fun BookList(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-//        item {
-//            Title(title = "ReadStack")
-//        }
 
         if (readStackUIState.isLoading) {
             item {
