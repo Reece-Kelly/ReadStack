@@ -8,12 +8,16 @@ import kotlinx.serialization.builtins.serializer
 
 class BooksTypeConverters {
     @TypeConverter
-    fun convertAuthorsToString(authors: List<String>): String {
-        return Json.encodeToString(ListSerializer(String.serializer()), authors)
-    }
+    fun convertAuthorsToString(authors: List<String>): String =
+        Json.encodeToString(authors)
 
     @TypeConverter
-    fun convertStringToAuthors(authorsString: String): List<String> {
-        return Json.decodeFromString(ListSerializer(String.serializer()), authorsString)
-    }
+    fun convertStringToAuthors(data: String): List<String> =
+        Json.decodeFromString(data)
+
+    @TypeConverter
+    fun fromBookStatus(status: BookStatus): String = status.name
+
+    @TypeConverter
+    fun toBookStatus(status: String): BookStatus = BookStatus.valueOf(status)
 }
