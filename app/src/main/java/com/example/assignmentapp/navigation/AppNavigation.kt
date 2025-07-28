@@ -13,8 +13,13 @@ import com.example.assignmentapp.views.BookDetailsScreen
 import com.example.assignmentapp.data.Volume
 import com.example.assignmentapp.views.SearchScreen
 import com.example.assignmentapp.views.SuggestScreen
+import com.example.assignmentapp.viewmodel.ReadStackViewModel
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalContext
+import org.koin.androidx.compose.getViewModel
+
 
 @Composable
 fun AppNavigation() {
@@ -72,6 +77,8 @@ fun AppNavigation() {
             )
         ) { backStackEntry ->
             val volumeJson = backStackEntry.arguments?.getString("volume") ?: ""
+            val context = LocalContext.current
+            val readStackViewModel: ReadStackViewModel = getViewModel()
             val volume = try {
                 val decoded = Uri.decode(volumeJson)
                 Json.decodeFromString<Volume>(decoded)
@@ -83,6 +90,10 @@ fun AppNavigation() {
             BookDetailsScreen(
                 volume = volume,
                 onBackPressed = {
+                    navController.popBackStack()
+                },
+                onSaveBook = { status ->
+                    readStackViewModel.saveBook(volume, status)
                     navController.popBackStack()
                 }
             )
