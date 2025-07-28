@@ -27,7 +27,8 @@ class BooksRepositoryImpl(
                             thumbnail = entity.thumbnail,
                             smallThumbnail = entity.smallThumbnail
                         )
-                    )
+                    ),
+                    status = entity.status
                 )
             }
         }
@@ -91,13 +92,18 @@ class BooksRepositoryImpl(
 
     override suspend fun searchBooks(query: String): List<Volume> {
         val response = booksAPI.fetchBooks(query)
-        if (response.isSuccessful) {
-            return response.body()?.items ?: emptyList()
+        return if (response.isSuccessful) {
+            response.body()?.items?.map { apiVolume ->
+                Volume(
+                    id = apiVolume.id,
+                    volumeInfo = apiVolume.volumeInfo,
+                    status = null
+                )
+            } ?: emptyList()
         } else {
             throw Exception("Search failed: ${response.errorBody()?.string()}")
         }
     }
-
 }
 
 
