@@ -52,7 +52,7 @@ class ReadStackViewModel(
                 val results = booksRepository.searchBooks(query)
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    volumes = results,
+                    searchResults = results,
                     currentSearchWord = query
                 )
             } catch (e: Exception) {
