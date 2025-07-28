@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.assignmentapp.data.BookStatus
 import com.example.assignmentapp.data.Volume
 
 
@@ -74,14 +75,13 @@ fun BookDetailsScreenContent(
 @Composable
 fun BookDetailsScreen(
     volume: Volume,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onSaveBook: (BookStatus) -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(text = "Book Details")
-                },
+                title = { Text("Book Details") },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
                         Icon(
@@ -93,10 +93,41 @@ fun BookDetailsScreen(
             )
         },
         content = { paddingValues ->
-            BookDetailsScreenContent(
-                modifier = Modifier.padding(paddingValues),
-                volume = volume
-            )
+            Column(modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+            ) {
+                BookDetailsScreenContent(
+                    modifier = Modifier.weight(1f),
+                    volume = volume
+                )
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Button(
+                        onClick = { onSaveBook(BookStatus.READING) },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Mark as Reading")
+                    }
+                    Button(
+                        onClick = { onSaveBook(BookStatus.READ) },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Mark as Read")
+                    }
+                    Button(
+                        onClick = { onSaveBook(BookStatus.WANT_TO_READ) },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Want to Read")
+                    }
+                }
+            }
         }
     )
 }

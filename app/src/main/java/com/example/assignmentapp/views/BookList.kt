@@ -1,74 +1,73 @@
 package com.example.assignmentapp.views
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.example.assignmentapp.Title
-import com.example.assignmentapp.data.Book
+import com.example.assignmentapp.data.BookStatus
 import com.example.assignmentapp.data.Volume
 import com.example.assignmentapp.viewmodel.ReadStackViewModel
-
+import java.util.Locale
 
 @Composable
 fun BookList(
     viewModel: ReadStackViewModel,
     modifier: Modifier = Modifier,
     onBookClicked: (Volume) -> Unit,
+    bookStatusToDisplay: BookStatus
 ) {
     val readStackUIState by viewModel.readStackUIState.collectAsStateWithLifecycle()
-    val volumeItems = readStackUIState.volumes.items.orEmpty()
+    val allVolumeItems = readStackUIState.volumes
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    val displayedVolumeItems = allVolumeItems.filter { it.status == bookStatusToDisplay }
+
+    Column(
+
     ) {
+        if (readStackUIState.isLoading && displayedVolumeItems.isEmpty()) {
+            CircularProgressIndicator()
 
-//        item {
-//            Title(title = "ReadStack")
-//        }
-
-        if (readStackUIState.isLoading) {
-            item {
-                CircularProgressIndicator()
-            }
         }
 
-        if (volumeItems.isNotEmpty()) {
-            items(volumeItems) { volume ->
+        if (displayedVolumeItems.isNotEmpty()) {
+            for (volume in displayedVolumeItems) {
                 VolumeListItem(
                     volume = volume,
                     onBookClicked = onBookClicked
                 )
             }
+        } else if (!readStackUIState.isLoading && readStackUIState.error == null) {
+            Text(
+                text = "No books with status \"${
+                    bookStatusToDisplay.name.replace("_", " ").lowercase().capitalize(
+                        Locale.ROOT
+                    )
+                }\" yet.",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(16.dp)
+            )
+
         }
 
         readStackUIState.error?.let { errorMsg ->
-            item {
+            if (displayedVolumeItems.isEmpty()) {
                 Text(text = errorMsg, color = MaterialTheme.colorScheme.error)
+
             }
         }
     }

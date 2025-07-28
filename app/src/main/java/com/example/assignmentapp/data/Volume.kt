@@ -14,9 +14,10 @@ data class GoogleBooksApiResponse(
 data class Volume(
     @SerialName("id")
     val id: String = "",
-
     @SerialName("volumeInfo")
-    val volumeInfo: VolumeInfo = VolumeInfo()
+    val volumeInfo: VolumeInfo = VolumeInfo(),
+    @SerialName("bookStatus")
+    val status: BookStatus? = null
 )
 
 @Serializable
