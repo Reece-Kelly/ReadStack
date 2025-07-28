@@ -44,7 +44,9 @@ fun SearchScreen(
                 .padding(innerPadding)
                 .padding(16.dp)
         ) {
-            Title(title = "ReadStack - Search")
+            Title(title = "ReadStack")
+
+            Title(title = "Search")
 
             OutlinedTextField(
                 value = searchQuery,
@@ -80,7 +82,7 @@ fun SearchScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    items(uiState.volumes) { volume ->
+                    items(uiState.searchResults) { volume ->
                         VolumeListItem(volume = volume, onBookClicked = onBookClicked)
                     }
                 }
