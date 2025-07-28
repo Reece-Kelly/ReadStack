@@ -16,8 +16,8 @@ class BooksTypeConverters {
         Json.decodeFromString(data)
 
     @TypeConverter
-    fun fromBookStatus(status: BookStatus): String = status.name
+    fun fromBookStatus(status: BookStatus): String? = status?.name
 
     @TypeConverter
-    fun toBookStatus(status: String): BookStatus = BookStatus.valueOf(status)
+    fun toBookStatus(status: String?): BookStatus? = status?.let { BookStatus.valueOf(it) }
 }
