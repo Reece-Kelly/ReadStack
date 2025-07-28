@@ -2,7 +2,9 @@ package com.example.assignmentapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.assignmentapp.data.BookStatus
 import com.example.assignmentapp.data.BooksRepository
+import com.example.assignmentapp.data.Volume
 import com.example.assignmentapp.views.ReadStackUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -59,6 +61,12 @@ class ReadStackViewModel(
                     error = e.message
                 )
             }
+        }
+    }
+
+    fun saveBook(volume: Volume, status: BookStatus) {
+        viewModelScope.launch {
+            booksRepository.saveBook(volume, status)
         }
     }
 }
