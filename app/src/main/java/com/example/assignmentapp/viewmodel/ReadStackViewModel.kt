@@ -69,14 +69,12 @@ class ReadStackViewModel(
                 ?.let { volumeWithDetails ->
                     Log.d(
                         "ViewModel",
-                        "Book found in repository: ${volumeWithDetails.volumeInfo.title}"
+                        "Book found: ${volumeWithDetails.volumeInfo.title}, Rating: ${volumeWithDetails.rating}, Page: ${volumeWithDetails.currentPageNumber}, Total Pages: ${volumeWithDetails.totalPageNumber}"
                     )
                     _currentBookDetails.value = volumeWithDetails
                 } ?: run {
-                Log.w(
-                    "ViewModel",
-                    "Book with ID $bookId NOT FOUND in repository after getBooks().firstOrNull()"
-                )
+                Log.w("ViewModel", "Book with ID $bookId NOT FOUND")
+                _currentBookDetails.value = null
             }
         }
     }
@@ -85,14 +83,31 @@ class ReadStackViewModel(
     fun saveBook(
         volume: Volume,
         status: BookStatus?,
-        review: String?
+        review: String?,
+        rating: Float?,
+        currentPage: Int?,
+        totalPageNumber: Int?
     ) {
         viewModelScope.launch {
             try {
-                booksRepository.saveBook(volume, status, review)
+                val volumeToSave = volume.copy(
+                    review = review,
+                    rating = rating,
+                    currentPageNumber = currentPage,
+                    totalPageNumber = totalPageNumber
+                )
+
+                booksRepository.saveBook(
+                    volumeToSave,
+                    status ?: volumeToSave.status,
+                    volumeToSave.review,
+                    volumeToSave.rating,
+                    volumeToSave.currentPageNumber,
+                    volumeToSave.totalPageNumber
+                )
                 Log.d(
                     "ViewModel",
-                    "Book ${volume.id} save initiated. Status: $status, Review: $review"
+                    "Book ${volume.id} save initiated. Status: $status, Review: $review, Rating: $rating, Page: $currentPage, Total Pages: $totalPageNumber"
                 )
                 loadBookDetails(volume.id)
             } catch (e: Exception) {
