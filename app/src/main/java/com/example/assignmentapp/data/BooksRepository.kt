@@ -14,7 +14,11 @@ interface BooksRepository {
     suspend fun saveBook(
         volume: Volume,
         status: BookStatus? = null,
-        review: String? = null)
+        review: String? = null,
+        rating: Float? = null,
+        currentPageNumber: Int? = 0,
+        totalPageNumber: Int? = 0,
+    )
 
     // Search for books using a search query and return the results
     suspend fun searchBooks(query: String): List<Volume>
