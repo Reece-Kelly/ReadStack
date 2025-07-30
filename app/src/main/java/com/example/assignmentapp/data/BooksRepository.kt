@@ -18,4 +18,6 @@ interface BooksRepository {
 
     // Search for books using a search query and return the results
     suspend fun searchBooks(query: String): List<Volume>
+
+    suspend fun getRandomBookFromDb(): BookEntity?
 }
