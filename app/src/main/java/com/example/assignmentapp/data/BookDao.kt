@@ -17,4 +17,6 @@ interface BookDao {
     @Query("SELECT * FROM Book WHERE id = :id")
     fun getBookById(id: String): Flow<BookEntity?>
 
+    @Query("SELECT * FROM Book ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomBook(): BookEntity
 }
