@@ -17,7 +17,9 @@ data class Volume(
     @SerialName("volumeInfo")
     val volumeInfo: VolumeInfo = VolumeInfo(),
     @SerialName("bookStatus")
-    val status: BookStatus? = null
+    val status: BookStatus? = null,
+    @SerialName("String")
+    var review: String? = null
 )
 
 @Serializable
