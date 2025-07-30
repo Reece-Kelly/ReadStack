@@ -45,6 +45,6 @@ fun Title(title: String, modifier: Modifier = Modifier) {
         text = title,
         fontSize = 45.sp,
         fontWeight = FontWeight.Bold,
-        modifier = modifier.padding(16.dp)
+        modifier = modifier.padding(8.dp)
     )
 }
