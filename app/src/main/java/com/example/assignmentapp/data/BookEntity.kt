@@ -18,7 +18,7 @@ data class BookEntity(
     val currentPageNumber: Int?,
     val totalPageNumber: Int?,
     val rating: Double?,
-    val review: String?,
+    val review: String? = null,
 )
 
 enum class BookStatus {
