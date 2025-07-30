@@ -34,7 +34,9 @@ fun SearchScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            BottomNavBar(navController = navController)
+            BottomNavBar(
+                navController = navController
+            )
         }
     ) { innerPadding ->
 
