@@ -18,8 +18,14 @@ data class Volume(
     val volumeInfo: VolumeInfo = VolumeInfo(),
     @SerialName("bookStatus")
     val status: BookStatus? = null,
-    @SerialName("String")
-    var review: String? = null
+    @SerialName("bookReview")
+    var review: String? = null,
+    @SerialName("bookRating")
+    var rating: Float? = null,
+    @SerialName("bookCurrentPageNumber")
+    var currentPageNumber: Int? = 0,
+    @SerialName("bookTotalPageNumber")
+    var totalPageNumber: Int? = 0,
 )
 
 @Serializable
