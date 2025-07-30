@@ -113,6 +113,10 @@ class BooksRepositoryImpl(
             throw Exception("Search failed: ${response.errorBody()?.string()}")
         }
     }
+
+    override suspend fun getRandomBookFromDb(): BookEntity? {
+        return bookDao.getRandomBook()
+    }
 }
 
 
