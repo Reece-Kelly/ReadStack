@@ -74,7 +74,7 @@ fun BookDetailsScreenContent(
         )
 
         Text(
-            text = "Description: ${(volumeInfo.description ?: "Unknown").take(300)}...",
+            text = "Description: ${(volumeInfo.description ?: "Unknown").take(200)}...",
             style = MaterialTheme.typography.bodyMedium
         )
 
