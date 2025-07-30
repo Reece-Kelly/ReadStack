@@ -2,23 +2,20 @@ package com.example.assignmentapp.navigation
 
 import android.net.Uri
 import android.util.Log
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.assignmentapp.views.HomeScreen
-import com.example.assignmentapp.views.BookDetailsScreen
 import com.example.assignmentapp.data.Volume
+import com.example.assignmentapp.views.BookDetailsScreen
+import com.example.assignmentapp.views.HomeScreen
 import com.example.assignmentapp.views.SearchScreen
 import com.example.assignmentapp.views.SuggestScreen
-import com.example.assignmentapp.viewmodel.ReadStackViewModel
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.ui.platform.LocalContext
-import org.koin.androidx.compose.getViewModel
+import kotlinx.serialization.json.Json
 
 
 @Composable
@@ -69,34 +66,40 @@ fun AppNavigation() {
         }
 
         composable(
-            route = "${Screens.BookDetailsScreen.route}/{volume}",
+            route = "${Screens.BookDetailsScreen.route}/{volumeJson}",
             arguments = listOf(
-                navArgument("volume") {
+                navArgument("volumeJson") {
                     type = NavType.StringType
                 }
             )
         ) { backStackEntry ->
-            val volumeJson = backStackEntry.arguments?.getString("volume") ?: ""
-            val context = LocalContext.current
-            val readStackViewModel: ReadStackViewModel = getViewModel()
-            val volume = try {
-                val decoded = Uri.decode(volumeJson)
-                Json.decodeFromString<Volume>(decoded)
-            } catch (e: Exception) {
-                Log.e("Navigation", "Failed to decode volume", e)
-                Volume()
+            val volumeJsonString = backStackEntry.arguments?.getString("volumeJson")
+            var volume: Volume? = null
+            var errorOccurred = false
+
+            if (volumeJsonString != null) {
+                try {
+                    val decodedJson = Uri.decode(volumeJsonString)
+                    volume = Json.decodeFromString<Volume>(decodedJson)
+                } catch (e: Exception) {
+                    Log.e("Navigation", "BookDetails: Failed to decode volumeJson", e)
+                    errorOccurred = true
+                }
+            } else {
+                Log.e("Navigation", "BookDetails: volumeJsonString is null")
+                errorOccurred = true
             }
 
-            BookDetailsScreen(
-                volume = volume,
-                onBackPressed = {
-                    navController.popBackStack()
-                },
-                onSaveBook = { status ->
-                    readStackViewModel.saveBook(volume, status)
-                    navController.popBackStack()
-                }
-            )
+            if (errorOccurred || volume == null) {
+                Text("Error loading book details.")
+            } else {
+                BookDetailsScreen(
+                    passedVolume = volume,
+                    onBackPressed = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 }
