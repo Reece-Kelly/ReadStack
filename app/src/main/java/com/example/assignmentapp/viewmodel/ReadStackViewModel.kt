@@ -1,5 +1,6 @@
 package com.example.assignmentapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.assignmentapp.data.BookStatus
@@ -9,6 +10,7 @@ import com.example.assignmentapp.views.ReadStackUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class ReadStackViewModel(
@@ -17,6 +19,9 @@ class ReadStackViewModel(
 
     private val _uiState = MutableStateFlow(ReadStackUIState())
     val readStackUIState: StateFlow<ReadStackUIState> = _uiState
+
+    private val _currentBookDetails = MutableStateFlow<Volume?>(null)
+    val currentBookDetails: StateFlow<Volume?> = _currentBookDetails
 
     init {
         observeBooksInDb()
@@ -30,17 +35,6 @@ class ReadStackViewModel(
                     volumes = volumes,
                     error = null
                 )
-            }
-        }
-    }
-
-    fun fetchRemoteBooks(query: String) {
-        viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
-            try {
-                booksRepository.fetchRemoteBooks(query)
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(isLoading = false, error = e.message)
             }
         }
     }
@@ -64,9 +58,44 @@ class ReadStackViewModel(
         }
     }
 
-    fun saveBook(volume: Volume, status: BookStatus) {
+
+    fun loadBookDetails(bookId: String) {
         viewModelScope.launch {
-            booksRepository.saveBook(volume, status)
+            Log.d("ViewModel", "loadBookDetails called for ID: $bookId")
+            booksRepository.getBooks().firstOrNull()?.find { it.id == bookId }
+                ?.let { volumeWithDetails ->
+                    Log.d(
+                        "ViewModel",
+                        "Book found in repository: ${volumeWithDetails.volumeInfo.title}"
+                    )
+                    _currentBookDetails.value = volumeWithDetails
+                } ?: run {
+                Log.w(
+                    "ViewModel",
+                    "Book with ID $bookId NOT FOUND in repository after getBooks().firstOrNull()"
+                )
+            }
+        }
+    }
+
+
+    fun saveBook(
+        volume: Volume,
+        status: BookStatus?,
+        review: String?
+    ) {
+        viewModelScope.launch {
+            try {
+                booksRepository.saveBook(volume, status, review)
+                Log.d(
+                    "ViewModel",
+                    "Book ${volume.id} save initiated. Status: $status, Review: $review"
+                )
+                loadBookDetails(volume.id)
+            } catch (e: Exception) {
+                Log.e("ViewModel", "Error saving book ${volume.id}: ${e.message}")
+                _uiState.value = _uiState.value.copy(error = "Failed to save book: ${e.message}")
+            }
         }
     }
 }
