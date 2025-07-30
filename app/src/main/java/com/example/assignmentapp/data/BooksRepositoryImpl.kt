@@ -3,6 +3,7 @@ package com.example.assignmentapp.data
 import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -28,7 +29,8 @@ class BooksRepositoryImpl(
                             smallThumbnail = entity.smallThumbnail
                         )
                     ),
-                    status = entity.status
+                    status = entity.status,
+                    review = entity.review
                 )
             }
         }
@@ -67,8 +69,14 @@ class BooksRepositoryImpl(
         }
     }
 
-    override suspend fun saveBook(volume: Volume, status: BookStatus) {
+    override suspend fun saveBook(
+        volume: Volume,
+        status: BookStatus?,
+        review: String?
+    ) {
         withContext(dispatcher) {
+            val existingEntity = bookDao.getBookById(volume.id).firstOrNull()
+
             bookDao.insert(
                 BookEntity(
                     id = volume.id,
@@ -79,13 +87,14 @@ class BooksRepositoryImpl(
                     publishedDate = volume.volumeInfo.publishedDate,
                     thumbnail = volume.volumeInfo.imageLinks?.thumbnail ?: "",
                     smallThumbnail = volume.volumeInfo.imageLinks?.smallThumbnail ?: "",
-                    status = status,
-                    currentPageNumber = 0,
-                    totalPageNumber = 0,
-                    rating = null,
-                    review = null
+                    status = status ?: existingEntity?.status,
+                    currentPageNumber = existingEntity?.currentPageNumber ?: 0,
+                    totalPageNumber = existingEntity?.totalPageNumber ?: 0,
+                    rating = existingEntity?.rating,
+                    review = review ?: existingEntity?.review
                 )
             )
+            Log.d("BooksRepository", "Book ${volume.id} saved. Status: $status, Review: $review")
         }
     }
 
