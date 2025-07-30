@@ -108,11 +108,6 @@ class ReadStackViewModel(
                 return@launch withContext(Dispatchers.IO) {
                     booksRepository.getRandomBookFromDb()
                 }
-//                val randomBook: BookEntity? = booksRepository.getRandomBookFromDb()
-//                Log.d(
-//                    "ViewModel",
-//                    "Random Book found: ${randomBook?.title}"
-//                )
             } catch (e: Exception) {
                 Log.e("ViewModel", "Error getting random book: ${e.message}")
                 _uiState.value = _uiState.value.copy(error = "Failed to get random book: ${e.message}")
