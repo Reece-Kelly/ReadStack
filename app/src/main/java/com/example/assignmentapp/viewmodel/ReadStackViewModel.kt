@@ -3,15 +3,18 @@ package com.example.assignmentapp.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.assignmentapp.data.BookEntity
 import com.example.assignmentapp.data.BookStatus
 import com.example.assignmentapp.data.BooksRepository
 import com.example.assignmentapp.data.Volume
 import com.example.assignmentapp.views.ReadStackUIState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ReadStackViewModel(
     private val booksRepository: BooksRepository
@@ -97,5 +100,24 @@ class ReadStackViewModel(
                 _uiState.value = _uiState.value.copy(error = "Failed to save book: ${e.message}")
             }
         }
+    }
+
+    suspend fun getRandomBookFromDb(): BookEntity? {
+        viewModelScope.launch {
+            try {
+                return@launch withContext(Dispatchers.IO) {
+                    booksRepository.getRandomBookFromDb()
+                }
+//                val randomBook: BookEntity? = booksRepository.getRandomBookFromDb()
+//                Log.d(
+//                    "ViewModel",
+//                    "Random Book found: ${randomBook?.title}"
+//                )
+            } catch (e: Exception) {
+                Log.e("ViewModel", "Error getting random book: ${e.message}")
+                _uiState.value = _uiState.value.copy(error = "Failed to get random book: ${e.message}")
+            }
+        }
+        return booksRepository.getRandomBookFromDb()
     }
 }
