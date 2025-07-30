@@ -11,7 +11,10 @@ interface BooksRepository {
     suspend fun fetchRemoteBooks(query: String)
 
     // Save a book (e.g., from search results) to the database
-    suspend fun saveBook(volume: Volume, status: BookStatus)
+    suspend fun saveBook(
+        volume: Volume,
+        status: BookStatus? = null,
+        review: String? = null)
 
     // Search for books using a search query and return the results
     suspend fun searchBooks(query: String): List<Volume>
