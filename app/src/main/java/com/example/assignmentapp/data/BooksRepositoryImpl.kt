@@ -72,7 +72,10 @@ class BooksRepositoryImpl(
     override suspend fun saveBook(
         volume: Volume,
         status: BookStatus?,
-        review: String?
+        review: String?,
+        rating: Float?,
+        currentPageNumber: Int?,
+        totalPageNumber: Int?,
     ) {
         withContext(dispatcher) {
             val existingEntity = bookDao.getBookById(volume.id).firstOrNull()
@@ -88,13 +91,16 @@ class BooksRepositoryImpl(
                     thumbnail = volume.volumeInfo.imageLinks?.thumbnail ?: "",
                     smallThumbnail = volume.volumeInfo.imageLinks?.smallThumbnail ?: "",
                     status = status ?: existingEntity?.status,
-                    currentPageNumber = existingEntity?.currentPageNumber ?: 0,
-                    totalPageNumber = existingEntity?.totalPageNumber ?: 0,
-                    rating = existingEntity?.rating,
-                    review = review ?: existingEntity?.review
+                    review = review ?: existingEntity?.review,
+                    rating = rating ?: existingEntity?.rating,
+                    currentPageNumber = currentPageNumber ?: existingEntity?.currentPageNumber,
+                    totalPageNumber = totalPageNumber ?: existingEntity?.totalPageNumber
                 )
             )
-            Log.d("BooksRepository", "Book ${volume.id} saved. Status: $status, Review: $review")
+            Log.d(
+                "BooksRepository",
+                "Book ${volume.id} saved. Status: $status, Review: $review, Rating: $rating, Page: $currentPageNumber, Total Pages: $totalPageNumber"
+            )
         }
     }
 
