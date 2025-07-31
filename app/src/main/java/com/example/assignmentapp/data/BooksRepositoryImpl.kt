@@ -126,6 +126,11 @@ class BooksRepositoryImpl(
     override suspend fun getRandomBookFromDb(): BookEntity? {
         return bookDao.getRandomBook()
     }
+
+    override suspend fun getRandomHighlyRatedBook(minRating: Float): BookEntity? {
+        // No need for withContext(dispatcher) if your DAO method is suspend and Room handles threading
+        return bookDao.getRandomHighlyRatedBook(minRating)
+    }
 }
 
 

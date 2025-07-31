@@ -24,4 +24,6 @@ interface BooksRepository {
     suspend fun searchBooks(query: String): List<Volume>
 
     suspend fun getRandomBookFromDb(): BookEntity?
+
+    suspend fun getRandomHighlyRatedBook(minRating: Float): BookEntity?
 }

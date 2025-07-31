@@ -19,4 +19,7 @@ interface BookDao {
 
     @Query("SELECT * FROM Book ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomBook(): BookEntity
+
+    @Query("SELECT * FROM Book WHERE rating >= :minRating ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomHighlyRatedBook(minRating: Float): BookEntity?
 }
