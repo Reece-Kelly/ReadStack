@@ -34,7 +34,9 @@ fun SearchScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            BottomNavBar(navController = navController)
+            BottomNavBar(
+                navController = navController
+            )
         }
     ) { innerPadding ->
 
@@ -54,14 +56,6 @@ fun SearchScreen(
                 label = { Text("Search books") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-//                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-//                keyboardActions = KeyboardActions(
-//                    onSearch = {
-//                        if (searchQuery.isNotBlank()) {
-//                            readStackViewModel.searchBooks(searchQuery.trim())
-//                        }
-//                    }
-//                ),
                 trailingIcon = {
                     IconButton(onClick = {
                         if (searchQuery.isNotBlank()) {

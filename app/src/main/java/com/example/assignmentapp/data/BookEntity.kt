@@ -15,10 +15,10 @@ data class BookEntity(
     val thumbnail: String,
     val smallThumbnail: String,
     val status: BookStatus?,
-    val currentPageNumber: Int?,
-    val totalPageNumber: Int?,
-    val rating: Double?,
-    val review: String?,
+    val currentPageNumber: Int? = 0,
+    val totalPageNumber: Int? = 0,
+    val rating: Float? = null,
+    val review: String? = null,
 )
 
 enum class BookStatus {

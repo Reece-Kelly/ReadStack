@@ -3,6 +3,7 @@ package com.example.assignmentapp.data
 import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -28,7 +29,11 @@ class BooksRepositoryImpl(
                             smallThumbnail = entity.smallThumbnail
                         )
                     ),
-                    status = entity.status
+                    status = entity.status,
+                    review = entity.review,
+                    rating = entity.rating,
+                    currentPageNumber = entity.currentPageNumber,
+                    totalPageNumber = entity.totalPageNumber
                 )
             }
         }
@@ -67,8 +72,17 @@ class BooksRepositoryImpl(
         }
     }
 
-    override suspend fun saveBook(volume: Volume, status: BookStatus) {
+    override suspend fun saveBook(
+        volume: Volume,
+        status: BookStatus?,
+        review: String?,
+        rating: Float?,
+        currentPageNumber: Int?,
+        totalPageNumber: Int?,
+    ) {
         withContext(dispatcher) {
+            val existingEntity = bookDao.getBookById(volume.id).firstOrNull()
+
             bookDao.insert(
                 BookEntity(
                     id = volume.id,
@@ -79,12 +93,16 @@ class BooksRepositoryImpl(
                     publishedDate = volume.volumeInfo.publishedDate,
                     thumbnail = volume.volumeInfo.imageLinks?.thumbnail ?: "",
                     smallThumbnail = volume.volumeInfo.imageLinks?.smallThumbnail ?: "",
-                    status = status,
-                    currentPageNumber = 0,
-                    totalPageNumber = 0,
-                    rating = null,
-                    review = null
+                    status = status ?: existingEntity?.status,
+                    review = review ?: existingEntity?.review,
+                    rating = rating ?: existingEntity?.rating,
+                    currentPageNumber = currentPageNumber ?: existingEntity?.currentPageNumber,
+                    totalPageNumber = totalPageNumber ?: existingEntity?.totalPageNumber
                 )
+            )
+            Log.d(
+                "BooksRepository",
+                "Book ${volume.id} saved. Status: $status, Review: $review, Rating: $rating, Page: $currentPageNumber, Total Pages: $totalPageNumber"
             )
         }
     }
@@ -103,6 +121,15 @@ class BooksRepositoryImpl(
         } else {
             throw Exception("Search failed: ${response.errorBody()?.string()}")
         }
+    }
+
+    override suspend fun getRandomBookFromDb(): BookEntity? {
+        return bookDao.getRandomBook()
+    }
+
+    override suspend fun getRandomHighlyRatedBook(minRating: Float): BookEntity? {
+        // No need for withContext(dispatcher) if your DAO method is suspend and Room handles threading
+        return bookDao.getRandomHighlyRatedBook(minRating)
     }
 }
 
