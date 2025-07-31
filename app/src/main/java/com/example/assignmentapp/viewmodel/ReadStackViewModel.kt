@@ -137,4 +137,16 @@ class ReadStackViewModel(
         }
         return booksRepository.getRandomBookFromDb()
     }
+
+    suspend fun getRandomHighlyRatedBook(minRating: Float = 4.0f): BookEntity? {
+        return try {
+            withContext(Dispatchers.IO) {
+                booksRepository.getRandomHighlyRatedBook(minRating)
+            }
+        } catch (e: Exception) {
+            Log.e("ViewModel", "Error getting random highly rated book title: ${e.message}")
+            _uiState.value = _uiState.value.copy(error = "Failed to get suggestion: ${e.message}")
+            null
+        }
+    }
 }
