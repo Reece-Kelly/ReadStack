@@ -30,7 +30,10 @@ class BooksRepositoryImpl(
                         )
                     ),
                     status = entity.status,
-                    review = entity.review
+                    review = entity.review,
+                    rating = entity.rating,
+                    currentPageNumber = entity.currentPageNumber,
+                    totalPageNumber = entity.totalPageNumber
                 )
             }
         }
