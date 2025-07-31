@@ -1,5 +1,6 @@
 package com.example.assignmentapp.views
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,11 +36,20 @@ fun SuggestScreen(
 
     val uiState by readStackViewModel.readStackUIState.collectAsState()
 
-    // Find a random book from database and query API using the author of that book
     LaunchedEffect(Unit) {
-        val randomBook: BookEntity? = readStackViewModel.getRandomBookFromDb()
-        val searchQuery = randomBook?.authors[0]
-        readStackViewModel.searchBooks(searchQuery?.trim() ?: "")
+        // Get random book with rating 4+
+        val highlyRatedBook: BookEntity? = readStackViewModel.getRandomHighlyRatedBook()
+        val searchQuery = highlyRatedBook?.authors[0]
+
+        if (searchQuery != null) {
+            Log.d("SuggestScreen", "Found highly rated book title: $highlyRatedBook. Searching based on author of this.")
+            readStackViewModel.searchBooks(searchQuery)
+        } else {
+            Log.d("SuggestScreen", "No highly rated book found. Falling back to author-based search.")
+            val randomBookFromAny: BookEntity? = readStackViewModel.getRandomBookFromDb()
+            val fallbackSearchQuery = randomBookFromAny?.authors?.firstOrNull()?.trim()
+            readStackViewModel.searchBooks(fallbackSearchQuery ?: "classic literature")
+        }
     }
 
     Scaffold(
@@ -62,7 +72,7 @@ fun SuggestScreen(
             Title(title = "Suggest")
 
             Text(
-                text = "Here are some book suggestions based on what you have read!",
+                text = "Here are some reading suggestions based on books you've liked!",
                 style = MaterialTheme.typography.bodyMedium,
             )
 
