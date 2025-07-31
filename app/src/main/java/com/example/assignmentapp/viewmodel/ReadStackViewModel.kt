@@ -61,19 +61,25 @@ class ReadStackViewModel(
         }
     }
 
-
     fun loadBookDetails(bookId: String) {
         viewModelScope.launch {
-            Log.d("ViewModel", "loadBookDetails called for ID: $bookId")
+            Log.d("ViewModelLifecycle", "loadBookDetails CALLED for ID: $bookId. Current _currentBookDetails ID: ${_currentBookDetails.value?.id}")
+            val existingBook = _currentBookDetails.value
+            if (existingBook != null && existingBook.id == bookId) {
+                Log.d("ViewModelLifecycle", "Book $bookId is already loaded. Rating: ${existingBook.rating}, Page: ${existingBook.currentPageNumber}")
+            }
+
             booksRepository.getBooks().firstOrNull()?.find { it.id == bookId }
                 ?.let { volumeWithDetails ->
-                    Log.d(
-                        "ViewModel",
-                        "Book found: ${volumeWithDetails.volumeInfo.title}, Rating: ${volumeWithDetails.rating}, Page: ${volumeWithDetails.currentPageNumber}, Total Pages: ${volumeWithDetails.totalPageNumber}"
-                    )
+                    Log.d("ViewModelLoad", "Book FOUND in DB for $bookId: Title: ${volumeWithDetails.volumeInfo.title}, " +
+                            "SAVED Rating: ${volumeWithDetails.rating}, " +
+                            "SAVED CurrentPage: ${volumeWithDetails.currentPageNumber}, " +
+                            "SAVED TotalPages: ${volumeWithDetails.totalPageNumber}")
+                    _currentBookDetails.value = null
                     _currentBookDetails.value = volumeWithDetails
+                    Log.d("ViewModelLifecycle", "SET _currentBookDetails for $bookId. Emitted Rating: ${volumeWithDetails.rating}, Page: ${volumeWithDetails.currentPageNumber}")
                 } ?: run {
-                Log.w("ViewModel", "Book with ID $bookId NOT FOUND")
+                Log.w("ViewModelLoad", "Book with ID $bookId NOT FOUND in DB during loadBookDetails.")
                 _currentBookDetails.value = null
             }
         }
@@ -125,7 +131,8 @@ class ReadStackViewModel(
                 }
             } catch (e: Exception) {
                 Log.e("ViewModel", "Error getting random book: ${e.message}")
-                _uiState.value = _uiState.value.copy(error = "Failed to get random book: ${e.message}")
+                _uiState.value =
+                    _uiState.value.copy(error = "Failed to get random book: ${e.message}")
             }
         }
         return booksRepository.getRandomBookFromDb()
