@@ -34,6 +34,7 @@ composeVersion = "1.0.0-alpha04"
 room = "2.6.1"
 ui = "1.8.3"
 uiTextVersion = "1.8.3"
+junitJunit = "4.12"
 
 
 
@@ -98,6 +99,7 @@ room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 ui = { module = "androidx.compose.ui:ui" }
 ui-text = { module = "androidx.compose.ui:ui-text" }
 ui-text-v183 = { module = "androidx.compose.ui:ui-text", version.ref = "uiTextVersion" }
+junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
 
 
 [plugins]

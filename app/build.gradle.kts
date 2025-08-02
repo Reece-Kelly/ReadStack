@@ -46,6 +46,8 @@ android {
 dependencies {
     // Compose BOM (central versioning)
     implementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
     // Compose UI
