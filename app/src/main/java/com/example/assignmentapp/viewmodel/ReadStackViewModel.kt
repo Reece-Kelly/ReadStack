@@ -149,4 +149,11 @@ class ReadStackViewModel(
             null
         }
     }
+
+    fun clearDatabase() {
+        viewModelScope.launch {
+            booksRepository.clearAllBooks()
+        }
+    }
+
 }
