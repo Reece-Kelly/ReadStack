@@ -26,4 +26,6 @@ interface BooksRepository {
     suspend fun getRandomBookFromDb(): BookEntity?
 
     suspend fun getRandomHighlyRatedBook(minRating: Float): BookEntity?
+
+    suspend fun clearAllBooks()
 }

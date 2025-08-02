@@ -131,6 +131,10 @@ class BooksRepositoryImpl(
         // No need for withContext(dispatcher) if your DAO method is suspend and Room handles threading
         return bookDao.getRandomHighlyRatedBook(minRating)
     }
+
+    override suspend fun clearAllBooks() {
+        bookDao.clearAll()
+    }
 }
 
 
