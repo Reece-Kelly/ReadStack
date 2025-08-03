@@ -7,9 +7,6 @@ interface BooksRepository {
     // Home Screen: Load books saved in the local database
     fun getBooks(): Flow<List<Volume>>
 
-    // Search Screen: Fetch books from the remote API using a search query
-    suspend fun fetchRemoteBooks(query: String)
-
     // Save a book (e.g., from search results) to the database
     suspend fun saveBook(
         volume: Volume,
