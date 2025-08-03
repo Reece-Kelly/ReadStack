@@ -29,12 +29,6 @@ has given a high rating to.
 | **🎯 Smart Suggestions**      | Get book recommendations based on titles you have previously rated highly.       |
 | **🔎 Search Functionality**   | Search for books by title, author, or ISBN, and add them to one of your lists.   |
 
----
-
-## 🏠 Home Screen Preview
-
-
----
 
 ## 🛠️ Tech Stack
 
