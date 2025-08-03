@@ -41,21 +41,23 @@ android {
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
-    // Compose BOM (central versioning)
+    // Compose BOM for version alignment
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.junit.ktx)
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
-    // Compose UI
+    // Core UI
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.androidx.compose.ui.text)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.material.icons.extended)
 
     // Material 3
-    implementation(libs.androidx.compose.material3.material32) // If this is a different version
+    implementation(libs.androidx.compose.material3.material32)
 
     // Navigation
     implementation(libs.compose.navigation)
@@ -93,11 +95,23 @@ dependencies {
     // Experimental XR Compose (optional)
     implementation("androidx.xr.compose:compose:1.0.0-alpha04")
 
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    // Local JVM unit tests
+    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(kotlin("test"))
+
+    // Instrumented Android tests
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+
+    // Debugging tools for UI tests
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
